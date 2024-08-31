@@ -50,6 +50,9 @@
   <dt id="arg-alpha">alpha<a class="anchor" aria-label="anchor" href="#arg-alpha"></a></dt>
 <dd><p>Significance level alpha for 100(1-alpha)%-confidence intervals, the default is 0.05.</p></dd>
 
+<dt id="arg-method-ci">method.ci<a class="anchor" aria-label="anchor" href="#arg-method-ci"></a></dt>
+<dd><p>A function used to compute the confidence intervals for sensitivity, specificity, and predictive values. The default is <code>waldci</code> for Wald's asymptotic normal-based confidence intervals.  See <code><a href="acc.1test.html">acc.1test</a></code>.</p></dd>
+
   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments, usually not required.</p></dd>
 
@@ -60,7 +63,7 @@
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>An list of class <code>acc.paired</code>:</p>
+    <p>A list of class <code>acc.paired</code>:</p>
 <dl><dt>Test1</dt>
 <dd><p>A list of class <code><a href="acc.1test.html">acc.1test</a></code> containing results and accuracy estimates of Test 1.</p></dd>
 
@@ -88,7 +91,7 @@
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">b2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostic accuracy of test 'y1'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and 95%-confidence intervals)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and Wald's asymptotic normal-based 95%-confidence intervals)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Est.         SE  Lower CL  Upper CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sensitivity 0.8802661 0.01528718 0.8503038 0.9102284</span>
@@ -103,7 +106,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> ----------------------------------------------------------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostic accuracy of test 'y2'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and 95%-confidence intervals)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and Wald's asymptotic normal-based 95%-confidence intervals)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Est.         SE  Lower CL  Upper CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sensitivity 0.7560976 0.02022128 0.7164646 0.7957305</span>

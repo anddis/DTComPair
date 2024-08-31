@@ -51,7 +51,10 @@
 <dd><p>Significance level alpha for 100(1-alpha)%-confidence intervals, the default is 0.05.</p></dd>
 
   <dt id="arg-testname">testname<a class="anchor" aria-label="anchor" href="#arg-testname"></a></dt>
-<dd><p>A character variable containing the name of the diagnostic test.</p></dd>
+<dd><p>A character string containing the name of the diagnostic test.</p></dd>
+
+  <dt id="arg-method-ci">method.ci<a class="anchor" aria-label="anchor" href="#arg-method-ci"></a></dt>
+<dd><p>A function used to compute the confidence intervals for sensitivity, specificity, and predictive values. The default is <code>waldci</code> for Wald's asymptotic normal-based confidence intervals. See 'Details'.</p></dd>
 
   <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>Additional arguments (usually not required).</p></dd>
@@ -59,7 +62,11 @@
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The calculation of accuracy measures and their variances follows standard methodology, e.g. described in Pepe (2003) or Zhou et al. (2011). Confidence intervals for diagnostic likelihood ratios are computed according to Simel et al. (1991).</p>
+    <p>The calculation of accuracy measures follows standard methodology, e.g. described in Pepe (2003) or Zhou et al. (2011).</p>
+<p>The confidence intervals for sensitivity, specificity, and predictive values are computed using the methodology implemented in the function passed to the argument <code>method.ci</code>.</p>
+<p>Available options are: (1) <code>waldci</code> (Wald's asymptotic normal-based CI; the default), (2) <code>logitci</code> (asymptotic normal-based CI on the logit scale and then back transformed), (3) <code>proflikci</code> (profile likelihood CI), (4) <code>exactci</code> (Clopper-Pearson's exact CI); (5) <code>add4cici</code> (Agresti-Coull's add-4 CI), (6) <code>addz2ci</code> (Agresti-Coull's add-z^2/2 CI), (7) <code>blakerci</code> (Blaker's exact CI), (8) <code>scoreci</code> (Wilson's score CI), (9) <code>midPci</code> (mid-P CI). Options (3) to (9) are based on the homonymous functions from the <code>{PropCIs}</code> package.</p>
+<p>Alternatively, the user can specify a custom function which must have these arguments: <code>x</code> (nominator of the proportion), <code>n</code> (denominator of the proportion), and <code>conf.level</code> (the confidence level of the CI). The function must return a named list with these components: <code>stderr</code> (a scalar with the standard error, if applicable), <code>conf.int</code> (a length-2 numeric vector with the bounds of the CI), <code>method</code> (a character string indicating the type of CI computed).</p>
+<p>Confidence intervals for diagnostic likelihood ratios are computed according to Simel et al. (1991).</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -89,7 +96,11 @@
 <dd><p>The significance level alpha used to compute 100(1-alpha)%-confidence intervals, the default is 0.05.</p></dd>
 
 <dt>testname </dt>
-<dd><p>A character variable containing the name of the diagnostic test.</p></dd>
+<dd><p>A character string containing the name of the diagnostic test.</p></dd>
+
+<dt>method.ci </dt>
+<dd><p>A character string describing the method used to compute the confidence intervals for sensitivity, specificity, and predictive values.</p></dd>
+
 
 </dl></div>
     <div class="section level2">
@@ -114,13 +125,28 @@ studies. <em>J Clin Epidemiol</em>, 44(8):763-70.</p>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">a2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostic accuracy of test 'y1'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and 95%-confidence intervals)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and Wald's asymptotic normal-based 95%-confidence intervals)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Est.         SE  Lower CL  Upper CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Sensitivity 0.8802661 0.01528718 0.8503038 0.9102284</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Specificity 0.6781609 0.02891782 0.6214830 0.7348388</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PPV         0.8253638 0.01731081 0.7914353 0.8592924</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NPV         0.7662338 0.02784617 0.7116563 0.8208113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            Est.  SE (log)  Lower CL  Upper CL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PDLR  2.7351124 0.0915147 2.2860079 3.2724472</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NDLR  0.1765568 0.1346088 0.1356142 0.2298601</span>
+<span class="r-in"><span><span class="va">a3</span> <span class="op">&lt;-</span> <span class="fu">acc.1test</span><span class="op">(</span><span class="va">a1</span>, method<span class="op">=</span><span class="va">exactci</span>, conf.level<span class="op">=</span><span class="fl">0.99</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">a3</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Diagnostic accuracy of test 'y1'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Estimates, standard errors and Clopper-Pearson's exact 95%-confidence intervals)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  Est. SE  Lower CL  Upper CL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Sensitivity 0.8802661 NA 0.8466745 0.9087592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Specificity 0.6781609 NA 0.6177792 0.7344406</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> PPV         0.8253638 NA 0.7884240 0.8582440</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NPV         0.7662338 NA 0.7062587 0.8192389</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            Est.  SE (log)  Lower CL  Upper CL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> PDLR  2.7351124 0.0915147 2.2860079 3.2724472</span>
